@@ -17,7 +17,6 @@
 			</el-form>
 			<div class="link-box">
 				<router-link to="/register">注册账户</router-link>
-				<router-link to="/">忘记密码？</router-link>
 			</div>
 		</el-card>
 	</div>

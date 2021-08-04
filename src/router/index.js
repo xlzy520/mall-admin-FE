@@ -19,10 +19,6 @@ import GoodsCategory from '@/views/Goods/Category.vue';
 import GoodsList from "@/views/Goods/List";
 import GoodsRelease from "@/views/Goods/Release";
 import GoodsEdit from "@/views/Goods/Edit";
-//权限
-import AuthRole from "@/views/Auth/Role";
-import AuthMenu from "@/views/Auth/Menu";
-import RoleConfig from "@/views/Auth/Role-Config";
 
 /**
  * 2. 定义路由
@@ -85,29 +81,6 @@ const routes = [{
 			name: "UserInfo",
 			component: UserInfo,
 		}, ]
-	},
-	{
-		path: '/auth',
-		name: 'Auth',
-		component: Layout,
-		meta: { requiredAuth: true },
-		children: [{
-				path: "menu",
-				name: "AuthMenu",
-				component: AuthMenu,
-			},
-			{
-				path: "role",
-				name: "AuthRole",
-				component: AuthRole,
-				children: [{
-					path: "config/:id",
-					name: "RoleConfig",
-					component: RoleConfig,
-					props: true,
-				}]
-			}
-		]
 	},
 	{
 		path: '/order',

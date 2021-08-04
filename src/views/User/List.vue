@@ -84,7 +84,11 @@
 
 			return {
 				tableData: [],
-				roles: [],
+				roles: [
+          { id: 1, name: '超级管理员' },
+          { id: 2, name: '管理员' },
+          { id: 3, name: '运营人员' },
+        ],
 				editModalShow: false,
 				form: {
 					id: "",
@@ -117,7 +121,6 @@
 		},
 		created() {
 			this.loadList();
-			this.loadRole();
 			document.title = "用户列表";
 		},
 		methods: {
@@ -125,12 +128,6 @@
 				let { status, data } = await Admin.list();
 				if (status) {
 					this.tableData = data;
-				}
-			},
-			async loadRole() {
-				let { status, data } = await Role.list();
-				if (status) {
-					this.roles = data;
 				}
 			},
 			// 显示编辑框

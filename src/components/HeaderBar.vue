@@ -11,7 +11,6 @@
 					<el-avatar :src="avatar" :size="30"></el-avatar>
 					<span class="username am-margin-left-sm">{{username}}</span>
 				</template>
-				<el-menu-item>消息</el-menu-item>
 				<el-menu-item index="/user/info">设置</el-menu-item>
 				<el-menu-item @click="handleLogout">退出</el-menu-item>
 			</el-submenu>

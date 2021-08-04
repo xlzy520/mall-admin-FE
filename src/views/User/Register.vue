@@ -32,7 +32,6 @@
 			</el-form>
 			<div class="link-box">
 				<router-link to="/login">登录账户</router-link>
-				<router-link to="/">忘记密码？</router-link>
 			</div>
 		</el-card>
 	</div>

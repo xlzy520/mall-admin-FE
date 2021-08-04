@@ -32,6 +32,7 @@
 							<el-button type="primary" plain icon="el-icon-edit" size="small"></el-button>
 						</router-link>
 						<el-button @click="showDeleteModal(scope.row.id)" icon="el-icon-delete" plain type="danger"></el-button>
+						<el-button @click="mockOrderCreate(scope.row)" icon="el-icon-add" plain type="primary">模拟下单</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -42,7 +43,7 @@
 	</div>
 </template>
 <script>
-	import { Goods } from '@/api/index';
+	import { Goods, Order } from '@/api/index';
 
 	export default {
 		data() {
@@ -86,6 +87,34 @@
 						let { status, msg } = await Goods.remove({ id });
 						if (status) {
 							this.$message.success('删除成功！');
+							this.loadGoodsList();
+						}
+					})
+					.catch(() => {
+						this.$message.info('已取消删除');
+					});
+			},
+			async mockOrderCreate(row) {
+				this.$confirm('模拟商城侧下单该商品', {
+						type: 'success'
+					})
+					.then(async () => {
+					  await Order.cartAdd({
+              gid: row.id,
+              num: 3
+            })
+
+					  await Order.orderSettle({
+              goods: [row.id]
+            })
+
+						let { status, msg } = await Order.orderCreate({
+              addressId: 20,
+              payment: 9999.99,
+              goodsList: [{id: row.id, num: 3}],
+            });
+						if (status) {
+							this.$message.success('创建成功！');
 							this.loadGoodsList();
 						}
 					})

@@ -117,37 +117,6 @@
 					<div ref="toolbar" class="w-e-toolbar"></div>
 					<div ref="editor" class="w-e-text-container"></div>
 				</el-form-item>
-				<div class="section-title">商品物流信息</div>
-				<el-row>
-					<el-col :span="5">
-						<el-form-item prop="province" label="所在地">
-							<el-select v-model="form.province" placeholder="请选择省份">
-								<el-option v-for="item in province_options" :label="item.name" :value="item.province_id" :key="item._id"></el-option>
-							</el-select>
-						</el-form-item>
-					</el-col>
-					<el-col :span="5">
-						<el-form-item prop="city">
-							<el-select v-model="form.city" placeholder="请选择城市">
-								<el-option v-for="item in city_options" :label="item.name" :value="item.city_id" :key="item._id"></el-option>
-							</el-select>
-						</el-form-item>
-					</el-col>
-					<el-col :span="5">
-						<el-form-item prop="county">
-							<el-select v-model="form.county" placeholder="请选择区//县">
-								<el-option v-for="item in county_options" :label="item.name" :value="item.county_id" :key="item._id"></el-option>
-							</el-select>
-						</el-form-item>
-					</el-col>
-					<el-col :span="5">
-						<el-form-item prop="town">
-							<el-select v-model="form.town" placeholder="请选择街道">
-								<el-option v-for="item in town_options" :label="item.name" :value="item.town_id" :key="item._id"></el-option>
-							</el-select>
-						</el-form-item>
-					</el-col>
-				</el-row>
 				<el-form-item prop="freight" label="运费">
 					<el-col :span="3">
 						<el-input v-model.number="form.freight">
@@ -202,10 +171,6 @@
 					brand: "",
 					detail: "",
 					freight: 0,
-					province: "",
-					city: "",
-					county: "",
-					town: "",
 				},
 				rules: {
 					cate_1st: [
@@ -261,18 +226,6 @@
 						{ required: true, type: 'number', message: '请填写商品的运费', trigger: 'blur' },
 						{ min: 0, type: 'number', message: '运费必须是0-999999之间的数字', trigger: 'blur' },
 					],
-					province: [
-						{ required: true, message: '请选择省份', trigger: 'blur' },
-					],
-					city: [
-						{ required: true, message: '请选择城市', trigger: 'blur' },
-					],
-					county: [
-						{ required: true, message: '请选择区县', trigger: 'blur' },
-					],
-					town: [
-						{ required: true, message: '请选择街道', trigger: 'blur' },
-					]
 				},
 				cate_1st_options: [],
 				cate_2nd_options: [],
@@ -319,8 +272,6 @@
 		created() {
 			// 获取一级分类
 			this.handleCateChange(1, "cate_1st");
-			// 获取所有省份
-			this.loadProvince();
 
 			document.title = "发布新商品";
 		},
@@ -364,42 +315,6 @@
 					return Promise.resolve(data);
 				} else {
 					this.$message.error(msg);
-				}
-			},
-			// 获取省份
-			async loadProvince() {
-				let { status, data } = await PCCT.province();
-				if (status) {
-					this.province_options = data;
-					//默认选择数组第一项
-					this.form.province = data[0].province_id;
-				}
-			},
-			// 根据省id获取城市
-			async loadCity(id) {
-				let { status, data } = await PCCT.city({ id });
-				if (status) {
-					this.city_options = data;
-					//默认选择数组第一项
-					this.form.city = data[0].city_id;
-				}
-			},
-			// 根据市区id获取县区
-			async loadCounty(id) {
-				let { status, data } = await PCCT.county({ id });
-				if (status) {
-					this.county_options = data;
-					//默认选择数组第一项
-					this.form.county = data[0].county_id;
-				}
-			},
-			// 根据市区id获取县区
-			async loadTown(id) {
-				let { status, data } = await PCCT.town({ id });
-				if (status) {
-					this.town_options = data;
-					//默认选择数组第一项
-					this.form.town = data[0].town_id;
 				}
 			},
 
